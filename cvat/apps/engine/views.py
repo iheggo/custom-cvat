@@ -23,7 +23,7 @@ from .log import slogger, clogger
 from cvat.apps.engine.models import StatusChoice
 
 ############################# High Level server API
-@login_required
+#@login_required
 @permission_required(perm=['engine.job.access'],
     fn=objectgetter(models.Job, 'jid'), raise_exception=True)
 def catch_client_exception(request, jid):
@@ -33,7 +33,7 @@ def catch_client_exception(request, jid):
 
     return HttpResponse()
 
-@login_required
+##@login_required
 def dispatch_request(request):
     """An entry point to dispatch legacy requests"""
     if request.method == 'GET' and 'id' in request.GET:
@@ -44,7 +44,7 @@ def dispatch_request(request):
     else:
         return redirect('/dashboard/')
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.task.create'], raise_exception=True)
 def create_task(request):
     """Create a new annotation task"""
@@ -103,7 +103,7 @@ def create_task(request):
 
     return JsonResponse({'tid': db_task.id})
 
-@login_required
+#@login_required
 #@permission_required(perm=['engine.task.access'],
 #    fn=objectgetter(models.Task, 'tid'), raise_exception=True)
 # We have commented lines above because the objectgetter() will raise 404 error in
@@ -119,7 +119,7 @@ def check_task(request, tid):
 
     return JsonResponse(response)
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.task.access'],
     fn=objectgetter(models.Task, 'tid'), raise_exception=True)
 def get_frame(request, tid, frame):
@@ -134,7 +134,7 @@ def get_frame(request, tid, frame):
         slogger.task[tid].error("cannot get frame #{}".format(frame), exc_info=True)
         return HttpResponseBadRequest(str(e))
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.task.delete'],
     fn=objectgetter(models.Task, 'tid'), raise_exception=True)
 def delete_task(request, tid):
@@ -148,7 +148,7 @@ def delete_task(request, tid):
 
     return HttpResponse()
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.task.change'],
     fn=objectgetter(models.Task, 'tid'), raise_exception=True)
 def update_task(request, tid):
@@ -163,7 +163,7 @@ def update_task(request, tid):
 
     return HttpResponse()
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.task.access'],
     fn=objectgetter(models.Task, 'tid'), raise_exception=True)
 def get_task(request, tid):
@@ -176,7 +176,7 @@ def get_task(request, tid):
 
     return JsonResponse(response, safe=False)
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.job.access'],
     fn=objectgetter(models.Job, 'jid'), raise_exception=True)
 def get_job(request, jid):
@@ -189,7 +189,7 @@ def get_job(request, jid):
 
     return JsonResponse(response, safe=False)
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.task.access'],
     fn=objectgetter(models.Task, 'tid'), raise_exception=True)
 def dump_annotation(request, tid):
@@ -202,7 +202,7 @@ def dump_annotation(request, tid):
 
     return HttpResponse()
 
-@login_required
+#@login_required
 @gzip_page
 @permission_required(perm=['engine.task.access'],
     fn=objectgetter(models.Task, 'tid'), raise_exception=True)
@@ -217,7 +217,7 @@ def check_annotation(request, tid):
     return JsonResponse(response)
 
 
-@login_required
+#@login_required
 @gzip_page
 @permission_required(perm=['engine.task.access'],
     fn=objectgetter(models.Task, 'tid'), raise_exception=True)
@@ -234,7 +234,7 @@ def download_annotation(request, tid):
     return response
 
 
-@login_required
+#@login_required
 @gzip_page
 @permission_required(perm=['engine.job.access'],
     fn=objectgetter(models.Job, 'jid'), raise_exception=True)
@@ -248,7 +248,7 @@ def get_annotation(request, jid):
 
     return JsonResponse(response, safe=False)
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.job.change'],
     fn=objectgetter(models.Job, 'jid'), raise_exception=True)
 def save_annotation_for_job(request, jid):
@@ -270,7 +270,7 @@ def save_annotation_for_job(request, jid):
 
     return HttpResponse()
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.task.change'],
     fn=objectgetter(models.Task, 'tid'), raise_exception=True)
 def save_annotation_for_task(request, tid):
@@ -284,7 +284,7 @@ def save_annotation_for_task(request, tid):
 
     return HttpResponse()
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.task.change'],
     fn=objectgetter(models.Task, 'tid'), raise_exception=True)
 def delete_annotation_for_task(request, tid):
@@ -298,7 +298,7 @@ def delete_annotation_for_task(request, tid):
     return HttpResponse()
 
 
-@login_required
+#@login_required
 @permission_required(perm=['engine.job.change'],
     fn=objectgetter(models.Job, 'jid'), raise_exception=True)
 def save_job_status(request, jid):
@@ -315,7 +315,7 @@ def save_job_status(request, jid):
         return HttpResponseBadRequest(str(e))
     return HttpResponse()
 
-@login_required
+#@login_required
 def get_username(request):
     response = {'username': request.user.username}
     return JsonResponse(response, safe=False)

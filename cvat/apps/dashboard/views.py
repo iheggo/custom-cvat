@@ -8,6 +8,8 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.conf import settings
 from cvat.apps.authentication.decorators import login_required
+from django.views.decorators.clickjacking import xframe_options_exempt
+
 
 from cvat.apps.engine.models import Task as TaskModel, Job as JobModel
 from cvat.settings.base import JS_3RDPARTY
@@ -54,7 +56,7 @@ def JsTreeView(request):
         json_dumps_params=dict(ensure_ascii=False))
 
 
-@login_required
+
 def DashboardView(request):
     query_name = request.GET['search'] if 'search' in request.GET else None
     query_job = int(request.GET['jid']) if 'jid' in request.GET and request.GET['jid'].isdigit() else None
