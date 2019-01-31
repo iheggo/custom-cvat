@@ -14,7 +14,13 @@
 {% block head_css %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/stylesheet.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/js/3rdparty/jstree/themes/default/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/js/3rdparty/jstree/themes/default/style.css' %}">  
+	<style>
+	body {
+		width: 0 !important;
+		height: 0 !important;
+	}
+	</style>
 {% endblock %}
 
 {% block head_js_3rdparty %}
@@ -40,31 +46,10 @@
 {% endblock %}
 
 {% block content %}
-    <div id="content">
-        <center>
-            <table style="width: 65%;">
-                <tr>
-                    <td><button id="dashboardCreateTaskButton" class="regular h1"> Create New Task </button></td>
-                    <td>
-                        <div style="width: 300px; float: right;">
-                            <input type="text" id="dashboardSearchInput" class="regular h1" placeholder="Search.." name="search">
-                            <button id="dashboardSearchSubmit" class="regular h1"> &#x1F50D; </button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </center>
 
-        {% autopaginate data %}
-        <div style="float: left; width: 100%">
-            {% for item in data %}
-                {% include "dashboard/task.html" %}
-            {% endfor %}
-        </div>
-        <center>{% paginate %}</center>
-    </div>
 
-    <div id="dashboardCreateModal" class="modal hidden">
+    <div style="float:left">
+
         <form id="dashboardCreateContent" class="modal-content" autocomplete="on" onsubmit="return false">
             <center>
                 <label class="semiBold h1"> Task Configuration </label>
