@@ -14,13 +14,7 @@
 {% block head_css %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/stylesheet.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/js/3rdparty/jstree/themes/default/style.css' %}">  
-	<style>
-	body {
-		width: 0 !important;
-		height: 0 !important;
-	}
-	</style>
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/js/3rdparty/jstree/themes/default/style.css' %}">
 {% endblock %}
 
 {% block head_js_3rdparty %}
@@ -46,10 +40,31 @@
 {% endblock %}
 
 {% block content %}
+    <div id="content">
+        <center>
+            <table style="width: 65%;">
+                <tr>
+                    <td><button id="dashboardCreateTaskButton" class="regular h1"> Create sadasd New Task </button></td>
+                    <td>
+                        <div style="width: 300px; float: right;">
+                            <input type="text" id="dashboardSearchInput" class="regular h1" placeholder="Search.." name="search">
+                            <button id="dashboardSearchSubmit" class="regular h1"> &#x1F50D; </button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </center>
 
+        {% autopaginate data %}
+        <div style="float: left; width: 100%">
+            {% for item in data %}
+                {% include "dashboard/task.html" %}
+            {% endfor %}
+        </div>
+        <center>{% paginate %}</center>
+    </div>
 
-    <div style="float:left">
-
+    <div id="dashboardCreateModal" class="modal hidden">
         <form id="dashboardCreateContent" class="modal-content" autocomplete="on" onsubmit="return false">
             <center>
                 <label class="semiBold h1"> Task Configuration </label>
@@ -149,12 +164,12 @@ Example: @select=race:__undefined__,skip,asian,black,caucasian,other'/>
                 </div>
             </div>
             <div style="width: 100%; height: 14%; padding-top: 10px;">
+                <div style="float: left; height: 50px;  overflow: auto; width: 63%; height: auto;">
+                    <label id="dashboardCreateTaskMessage" class="regular h2 selectable" style="float:left;">  </label>
+                </div>
                 <div style="float: right; width: 35%; height: 50px;">
                     <button id="dashboardCancelTask" class="regular h2"> Cancel </button>
                     <button id="dashboardSubmitTask" class="regular h2"> Submit </button>
-                </div>
-                <div style="float: left; height: 50px;  overflow: auto; width: 100%; height: auto; word-break: break-word;">
-                    <label id="dashboardCreateTaskMessage" class="regular h2 selectable" style="float:left;">  </label>
                 </div>
             </div>
         </form>
